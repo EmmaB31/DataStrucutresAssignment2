@@ -22,6 +22,7 @@ def add_task():
     }
     tasks[next_id] = task
     print("Success:", task["title"], "successfully added")
+    print(task)
     next_id += 1
 
 #return task by ID
@@ -79,10 +80,11 @@ def highest_priority():
         f'Title: {highest_priority_task["title"]} '
         f'Priority: {highest_priority_task["priority"]}'
     )
-#update task title and priority
+#update task title and priority. Need to add error handling for integer input into this before submission
 def update_task():
     if not tasks:
         print("No tasks to update")
+        return
     task_to_update = int(input("Enter task number to update:"))
     new_title = input("Enter new title")
     new_priority = int(input("Enter new priority:"))
