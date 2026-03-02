@@ -69,25 +69,39 @@ def highest_priority():
 
     highest_priority_task = None
 
-    for task in tasks:
+    for task in tasks.values():
         if task["completed"]:
             continue  # skip completed tasks
         if highest_priority_task is None or task["priority"] > highest_priority_task["priority"]:
             highest_priority_task = task
+    if highest_priority_task is None:
+        print("All tasks complete")
+        return
     print(
         f'Highest priority task:\n'
         f'ID: {highest_priority_task["id"]} '
         f'Title: {highest_priority_task["title"]} '
         f'Priority: {highest_priority_task["priority"]}'
     )
-#update task title and priority. Need to add error handling for integer input into this before submission
+#update tasks
 def update_task():
     if not tasks:
         print("No tasks to update")
         return
-    task_to_update = int(input("Enter task number to update:"))
+    try:
+        task_to_update = int(input("Enter task number to update:"))
+    except ValueError:
+        print("Invalid Input")
+        return
+    if task_to_update not in tasks:
+        print("Task not found")
+        return
     new_title = input("Enter new title")
-    new_priority = int(input("Enter new priority:"))
+    try:
+        new_priority = int(input("Enter new priority:"))
+    except ValueError:
+        print("Invalid input")
+        return
     tasks[task_to_update].update({"title": new_title, "priority": new_priority})
     print("Task updated. New task details:", tasks[task_to_update])
 
